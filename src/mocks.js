@@ -72,19 +72,107 @@ export const charlie = {
   },
 };
 
+export const routes = {
+  setUpSuccessfulMock: (client) => {
+    const listResponse = () => new Response(
+      toBlob(routes.list),
+      {
+        headers: {
+          Link: '</1/SYNC/routes?page=1&perPage=10&q=blue&sort=>; rel="next", </1/SYNC/routes?page=1&perPage=10&q=blue&sort=>; rel="last"',
+        },
+      });
+    const singleResponse = () => new Response(toBlob(routes.getById(1)));
+
+    fetchMock
+      .get(client.resolve('/1/SYNC/routes?page=1&perPage=10&q=blue&sort='), listResponse)
+      .get(client.resolve('/1/SYNC/routes/1'), singleResponse);
+  },
+  getById: id => routes.list.find(v => v.id === id),
+  list: [
+    {
+      href: '/1/SYNC/routes/1',
+      id: 1,
+      name: 'Blue Line',
+      short_name: 'Blue',
+      description: 'Servicing the Townsville community',
+      is_public: true,
+      color: '#0000FF',
+      text_color: '#FFFFFF',
+      patterns: [
+        {
+          href: '/1/SYNC/patterns/1',
+        },
+      ],
+    },
+  ],
+};
+
+export const signs = {
+  setUpSuccessfulMock: (client) => {
+    const listResponse = () => new Response(
+      toBlob(signs.list),
+      {
+        headers: {
+          Link: '</1/SYNC/signs?page=1&perPage=10&q=first&sort=>; rel="next", </1/SYNC/signs?page=1&perPage=10&q=first&sort=>; rel="last"',
+        },
+      });
+    const singleResponse = () => new Response(toBlob(signs.getById(1)));
+
+    fetchMock
+      .get(client.resolve('/1/SYNC/signs?page=1&perPage=10&q=first&sort='), listResponse)
+      .get(client.resolve('/1/SYNC/signs/1'), singleResponse);
+  },
+  getById: id => signs.list.find(v => v.id === id),
+  list: [
+    {
+      href: '/1/SYNC/signs/1',
+      id: 1,
+      name: 'The first sign',
+      enabled: true,
+    },
+  ],
+};
+
+export const stops = {
+  setUpSuccessfulMock: (client) => {
+    const listResponse = () => new Response(
+      toBlob(stops.list),
+      {
+        headers: {
+          Link: '</1/SYNC/stops?page=1&perPage=10&q=1st&sort=>; rel="next", </1/SYNC/stops?page=1&perPage=10&q=1st&sort=>; rel="last"',
+        },
+      });
+    const singleResponse = () => new Response(toBlob(stops.getById(1)));
+
+    fetchMock
+      .get(client.resolve('/1/SYNC/stops?page=1&perPage=10&q=1st&sort='), listResponse)
+      .get(client.resolve('/1/SYNC/stops/1'), singleResponse);
+  },
+  getById: id => stops.list.find(v => v.id === id),
+  list: [
+    {
+      href: '/1/SYNC/stops/1',
+      id: 1,
+      name: '1st/Main',
+      latitude: 34.081728,
+      longitude: -118.351585,
+    },
+  ],
+};
+
 export const vehicles = {
   setUpSuccessfulMock: (client) => {
     const listResponse = () => new Response(
       toBlob(vehicles.list),
       {
         headers: {
-          Link: '</1/SYNC/vehicles?page=1&perPage=10&q=12>; rel="next", </1/SYNC/vehicles?page=1&perPage=10&q=12>; rel="last"',
+          Link: '</1/SYNC/vehicles?page=1&perPage=10&q=12&sort=>; rel="next", </1/SYNC/vehicles?page=1&perPage=10&q=12&sort=>; rel="last"',
         },
       });
     const singleResponse = () => new Response(toBlob(vehicles.getById(1)));
 
     fetchMock
-      .get(client.resolve('/1/SYNC/vehicles?page=1&perPage=10&q=12'), listResponse)
+      .get(client.resolve('/1/SYNC/vehicles?page=1&perPage=10&q=12&sort='), listResponse)
       .get(client.resolve('/1/SYNC/vehicles/1'), singleResponse);
   },
   getById: id => vehicles.list.find(v => v.id === id),

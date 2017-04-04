@@ -2,25 +2,22 @@ import Resource from './Resource';
 import Assignment from './Assignment';
 
 /**
- * Vehicle resource
+ * Route resource
  */
-class Vehicle extends Resource {
+class Route extends Resource {
   /**
-   * Creates a new vehicle
+   * Creates a new route
    *
    * Will populate itself with the values given to it after the client parameter
-   * @example <caption>Assigning partial vehicle data to a new instance</caption>
+   * @example <caption>Assigning partial route data to a new instance</caption>
    * const client = new Client();
-   * const partialVehicleData = {
-   *   href: '/1/SYNC/vehicles/2',
+   * const partialRouteData = {
+   *   href: '/1/SYNC/routes/2',
    *   name: '9876',
-   *   assignment: {
-   *     sign_in_type: 'Dispatch',
-   *   },
    * };
-   * const vehicle = new Vehicle(client, partialVehicleData);
+   * const route = new Route(client, partialRouteData);
    *
-   * vehicle.hydrated == true;
+   * route.hydrated == true;
    * @param {Client} client Instance of pre-configured client
    * @param {Array} rest Remaining arguments to use in assigning values to this instance
    */
@@ -42,24 +39,24 @@ class Vehicle extends Resource {
   /**
    * Makes a href for a given customer code and ID
    * @param {string} customerCode Customer code
-   * @param {Number} id Vehicle ID
-   * @returns {string} URI to instance of vehicle
+   * @param {Number} id Route ID
+   * @returns {string} URI to instance of route
    */
   static makeHref(customerCode, id) {
     return {
-      href: `/1/${customerCode}/vehicles/${id}`,
+      href: `/1/${customerCode}/routes/${id}`,
     };
   }
 
   /**
-   * Fetches the data for this vehicle via the client
-   * @returns {Promise} If successful, a hydrated instance of this vehicle
+   * Fetches the data for this route via the client
+   * @returns {Promise} If successful, a hydrated instance of this route
    */
   fetch() {
     return this.client.get(this.href)
       .then(response => response.json())
-      .then(vehicle => new Vehicle(this.client, this, vehicle));
+      .then(route => new Route(this.client, this, route));
   }
 }
 
-export default Vehicle;
+export default Route;
